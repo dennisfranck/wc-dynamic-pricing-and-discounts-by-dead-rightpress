@@ -1,4 +1,6 @@
 name: release-zip
+permissions:
+  contents: write
 on:
   push:
     tags:
@@ -28,9 +30,18 @@ jobs:
           path: |
             dist/wc-dynamic-pricing-and-discounts-${{ steps.version.outputs.version }}.zip
             dist/wc-dynamic-pricing-and-discounts.zip
-      - uses: softprops/action-gh-release@v1
+      - name: Create Release
         if: startsWith(github.ref, 'refs/tags/')
+        uses: ncipollo/release-action@v1
         with:
-          files: |
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          allowUpdates: true
+          generateReleaseNotes: true
+          artifacts: |
             dist/wc-dynamic-pricing-and-discounts-${{ steps.version.outputs.version }}.zip
             dist/wc-dynamic-pricing-and-discounts.zip
+          artifactErrorsFailBuild: true
