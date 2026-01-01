@@ -1,6 +1,9 @@
 name: release-zip
 permissions:
   contents: write
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: true
 on:
   push:
     tags:
@@ -11,26 +14,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - id: version
+      - name: Build ZIPs
         run: |
-          VER=$(grep -Po "define\\('RP_WCDPD_VERSION', '([^']+)'\\);" wc-dynamic-pricing-and-discounts/wc-dynamic-pricing-and-discounts.php | sed -E "s/.*'([^']+)'.*/\\1/")
-          if [ -z "$VER" ]; then
-            VER=$(grep -Po "^\\s*\\*\\s*Version:\\s*([0-9.]+)" wc-dynamic-pricing-and-discounts/wc-dynamic-pricing-and-discounts.php | sed -E "s/.*Version:\\s*([0-9.]+)/\\1/")
-          fi
-          echo "version=$VER" >> "$GITHUB_OUTPUT"
-      - run: |
           mkdir -p dist
-          zip -r "dist/wc-dynamic-pricing-and-discounts-${{ steps.version.outputs.version }}.zip" wc-dynamic-pricing-and-discounts
-          cp -r wc-dynamic-pricing-and-discounts wc-dpd-temp
           zip -r "dist/wc-dynamic-pricing-and-discounts.zip" wc-dynamic-pricing-and-discounts
-          rm -rf wc-dpd-temp
-      - uses: actions/upload-artifact@v4
+          zip -r "dist/wc-dynamic-pricing-and-discounts-${{ github.ref_name }}.zip" wc-dynamic-pricing-and-discounts
+      - name: Upload artifacts (optional)
+        uses: actions/upload-artifact@v4
         with:
           name: plugin-zips
           path: |
-            dist/wc-dynamic-pricing-and-discounts-${{ steps.version.outputs.version }}.zip
             dist/wc-dynamic-pricing-and-discounts.zip
-      - name: Create Release
+            dist/wc-dynamic-pricing-and-discounts-${{ github.ref_name }}.zip
+      - name: Create/Update Release and upload assets
         if: startsWith(github.ref, 'refs/tags/')
         uses: ncipollo/release-action@v1
         with:
@@ -42,6 +38,6 @@ jobs:
           allowUpdates: true
           generateReleaseNotes: true
           artifacts: |
-            dist/wc-dynamic-pricing-and-discounts-${{ steps.version.outputs.version }}.zip
             dist/wc-dynamic-pricing-and-discounts.zip
+            dist/wc-dynamic-pricing-and-discounts-${{ github.ref_name }}.zip
           artifactErrorsFailBuild: true
