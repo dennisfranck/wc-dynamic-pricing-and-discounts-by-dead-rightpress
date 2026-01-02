@@ -1,7 +1,7 @@
 # WooCommerce Dynamic Pricing & Discounts — Community Maintenance
 
-Version: 2.5.5  
-Date: 2026-01-01
+Version: 2.5.6  
+Date: 2026-01-02
 
 ## Summary
 - Maintained plugin without altering original functionality.
