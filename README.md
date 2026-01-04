@@ -33,6 +33,11 @@ Date: 2026-01-02
 3. Click **Install Now**.
 4. If prompted, confirm to **Replace current with uploaded**.
 
+## Support & Scope
+- **[Report a Bug](https://github.com/dennisfranck/wc-dynamic-pricing-and-discounts-by-dead-rightpress/issues)**: Please use the Issues section **only** to report bugs or compatibility problems.
+- **No New Features**: This repository is focused solely on maintenance and keeping the plugin alive. New features will **not** be added here.
+- **Forking**: You are free to clone or fork this repository and implement any new features or changes you desire on your own.
+
 ## License / Credits
 - Original author rights preserved; this package is community maintenance.
 - No functional behavior changes, only maintenance and compatibility updates.
