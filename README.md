@@ -24,7 +24,7 @@ Date: 2026-01-02
 
 ## Installation / Upgrade
 
-**[Download Latest Version (ZIP)](https://github.com/dennisfranck/wc-dynamic-pricing-and-discounts-by-dead-rightpress/releases/latest/download/wc-dynamic-pricing-and-discounts.zip)**  
+**[Download Latest Version (ZIP)](https://github.com/dennisfranck/wc-dynamic-pricing-and-discounts-by-dead-rightpress/raw/main/wc-dynamic-pricing-and-discounts.zip)**  
 *(Link to the latest source code zipball, instalable)*
 
 **Steps:**
